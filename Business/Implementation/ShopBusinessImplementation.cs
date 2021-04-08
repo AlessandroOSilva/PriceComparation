@@ -1,4 +1,5 @@
 ﻿using PricesComparation.Models;
+using PricesComparation.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,29 +9,36 @@ namespace PricesComparation.Business.Implementation
 {
     public class ShopBusinessImplementation : IShopBusiness
     {
+        private readonly IShopRepository _repository;
+
+        public ShopBusinessImplementation(IShopRepository repository)
+        {
+            _repository = repository;
+        }
+
         public Shop Create(Shop shop)
         {
-            throw new NotImplementedException();
+            return _repository.Create(shop);
         }
 
         public void Delete(long id)
         {
-            throw new NotImplementedException();
+            _repository.Delete(id);
         }
 
         public List<Shop> FindAll()
         {
-            throw new NotImplementedException();
+            return _repository.FindAll();
         }
 
         public Shop FindById(long id)
         {
-            throw new NotImplementedException();
+            return _repository.FindById(id);
         }
 
         public Shop Update(Shop shop)
         {
-            throw new NotImplementedException();
+            return _repository.Update(shop);
         }
     }
 }

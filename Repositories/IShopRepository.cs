@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PricesComparation.Repositories
 {
-    interface IShopRepository
+    public interface IShopRepository
     {
         Shop Create(Shop shop);
         Shop FindById(long id);

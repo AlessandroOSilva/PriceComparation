@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,9 +11,11 @@ namespace PricesComparation.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Typed { get; set; }
+        [ForeignKey("Id")]
         public Brand Brand { get; set; }
-        public int BrandId { get; set; }
         public double Price { get; set; }
+        [ForeignKey("Id")]
+        public Shop Shop { get; set; }
 
         public Product()
         {
