@@ -10,6 +10,7 @@ using PricesComparation.Business.Implementation;
 using PricesComparation.Models.Context;
 using PricesComparation.Repositories;
 using PricesComparation.Repositories.Implementation;
+using PricesComparation.Services;
 
 namespace PricesComparation
 {
@@ -34,20 +35,25 @@ namespace PricesComparation
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PricesComparation", Version = "v1" });
             });
 
+
+            services.AddScoped<SeedingService>();
+
             services.AddScoped<IProductBusiness, ProductBusinesImplementation>();
             services.AddScoped<IProductRepository, ProductRepositoryImplementation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedingService seedingService)
         {
             if (env.IsDevelopment())
             {
+                seedingService.Seed();
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PricesComparation v1"));
             }
 
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -57,6 +63,7 @@ namespace PricesComparation
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute("DefaultApi", "{controllers=value}/{id?}");
             });
         }
     }

@@ -47,7 +47,7 @@ namespace PricesComparation.Repositories.Implementation
 
         public bool Exists(long id)
         {
-            return _context.Product.Any(p => p.Id.Equals(id));
+            return _context.Product.Any(p => p.ProductId.Equals(id));
         }
 
         public List<Product> FindAll()
@@ -57,13 +57,13 @@ namespace PricesComparation.Repositories.Implementation
 
         public Product FindById(long id)
         {
-            return _context.Product.FirstOrDefault(x => x.Id.Equals(id));
+            return _context.Product.FirstOrDefault(x => x.ProductId.Equals(id));
         }
 
         public Product Update(Product product)
         {
-            if(!Exists(product.Id)) return null;
-            var result = _context.Product.SingleOrDefault(p => p.Id.Equals(product.Id));
+            if(!Exists(product.ProductId)) return null;
+            var result = _context.Product.SingleOrDefault(p => p.ProductId.Equals(product.ProductId));
 
             if (result != null)
             {

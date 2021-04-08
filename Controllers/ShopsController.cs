@@ -47,7 +47,7 @@ namespace PricesComparation.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutShop(int id, Shop shop)
         {
-            if (id != shop.Id)
+            if (id != shop.ShopId)
             {
                 return BadRequest();
             }
@@ -85,7 +85,7 @@ namespace PricesComparation.Controllers
             }
             catch (DbUpdateException)
             {
-                if (ShopExists(shop.Id))
+                if (ShopExists(shop.ShopId))
                 {
                     return Conflict();
                 }
@@ -95,7 +95,7 @@ namespace PricesComparation.Controllers
                 }
             }
 
-            return CreatedAtAction("GetShop", new { id = shop.Id }, shop);
+            return CreatedAtAction("GetShop", new { id = shop.ShopId }, shop);
         }
 
         // DELETE: api/Shops/5
@@ -116,7 +116,7 @@ namespace PricesComparation.Controllers
 
         private bool ShopExists(int id)
         {
-            return _context.Shop.Any(e => e.Id == id);
+            return _context.Shop.Any(e => e.ShopId == id);
         }
     }
 }

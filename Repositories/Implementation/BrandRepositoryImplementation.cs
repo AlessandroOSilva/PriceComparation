@@ -48,12 +48,12 @@ namespace PricesComparation.Repositories.Implementation
 
         public bool Exists(long id)
         {
-            return _context.Brand.Any(b => b.Id.Equals(id));
+            return _context.Brand.Any(b => b.BrandId.Equals(id));
         }
 
         public Brand FinById(int id)
         {
-            return _context.Brand.FirstOrDefault(b => b.Id.Equals(id));
+            return _context.Brand.FirstOrDefault(b => b.BrandId.Equals(id));
         }
 
         public List<Brand> FindAll()
@@ -63,8 +63,8 @@ namespace PricesComparation.Repositories.Implementation
 
         public Brand Update(Brand brand)
         {
-            if (!Exists(brand.Id)) return null;
-            var result = _context.Brand.SingleOrDefault(p => p.Id.Equals(brand.Id));
+            if (!Exists(brand.BrandId)) return null;
+            var result = _context.Brand.SingleOrDefault(p => p.BrandId.Equals(brand.BrandId));
 
             if (result != null)
             {

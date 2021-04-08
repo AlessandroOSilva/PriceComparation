@@ -47,7 +47,7 @@ namespace PricesComparation.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBrand(int id, Brand brand)
         {
-            if (id != brand.Id)
+            if (id != brand.BrandId)
             {
                 return BadRequest();
             }
@@ -81,7 +81,7 @@ namespace PricesComparation.Controllers
             _context.Brand.Add(brand);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBrand", new { id = brand.Id }, brand);
+            return CreatedAtAction("GetBrand", new { id = brand.BrandId }, brand);
         }
 
         // DELETE: api/Brands/5
@@ -102,7 +102,7 @@ namespace PricesComparation.Controllers
 
         private bool BrandExists(int id)
         {
-            return _context.Brand.Any(e => e.Id == id);
+            return _context.Brand.Any(e => e.BrandId == id);
         }
     }
 }

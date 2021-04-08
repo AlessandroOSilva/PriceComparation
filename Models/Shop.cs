@@ -1,16 +1,18 @@
 ﻿    using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PricesComparation.Models
 {
     public class Shop
     {
-        public int Id { get; set; }
+        [Key]
+        public int ShopId { get; set; }
         public string Name { get; set; }
         
-        [ForeignKey("Id")]
+        [ForeignKey("AdressId")]
         public Address Address { get; set; }
-        public ICollection<Product> Products { get; set; }
+        public ICollection<Product> Products { get; set; } = new List<Product>();
 
         public Shop()
         {
@@ -18,7 +20,7 @@ namespace PricesComparation.Models
 
         public Shop(int id, string name, Address address)
         {
-            Id = id;
+            ShopId = id;
             Name = name;
             Address = address;
         }
