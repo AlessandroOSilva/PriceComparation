@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PricesComparation.Models;
@@ -25,7 +23,7 @@ namespace PricesComparation.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Shop>>> GetShop()
         {
-            return await _context.Shop.ToListAsync();
+                return await _context.Shop.Include(p => p.Address).Include(o => o.Products).ThenInclude(b => b.Brand.Products).ToListAsync();
         }
 
         // GET: api/Shops/5
@@ -33,7 +31,7 @@ namespace PricesComparation.Controllers
         public async Task<ActionResult<Shop>> GetShop(int id)
         {
             var shop = await _context.Shop.FindAsync(id);
-
+            
             if (shop == null)
             {
                 return NotFound();

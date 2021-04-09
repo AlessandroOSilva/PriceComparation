@@ -23,14 +23,12 @@ namespace PricesComparation.Models
         {
         }
 
-        public Product(int id, string name, string typed, Brand brand, double price)
+        public Product(int id, string name, string typed, Brand brand)
         {
             ProductId = id;
             Name = name;
             Typed = typed;
-            Brand = brand;
-            Price = price;
+            Brand = brand;  
         }
-
     }
 }

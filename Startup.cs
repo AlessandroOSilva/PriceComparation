@@ -29,7 +29,10 @@ namespace PricesComparation
             var connection = Configuration.GetConnectionString("MySQLConnection");
             services.AddDbContextPool<PricesComparationContext>(options => options.UseMySql(connection, ServerVersion.AutoDetect(connection)));
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(opt => 
+            opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PricesComparation", Version = "v1" });

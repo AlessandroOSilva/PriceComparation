@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PricesComparation.Business;
+using PricesComparation.Business.Implementation;
 using PricesComparation.Models;
 using PricesComparation.Models.Context;
 
@@ -25,7 +27,7 @@ namespace PricesComparation.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
         {
-            return await _context.Product.ToListAsync();
+            return await _context.Product.Include(p => p.Brand).Include(b => b.Shop).Include(b => b.Shop.Address).Include(p => p.Brand.Products).ToListAsync();
         }
 
         // GET: api/Products/5

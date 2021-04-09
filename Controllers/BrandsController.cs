@@ -15,7 +15,6 @@ namespace PricesComparation.Controllers
     public class BrandsController : ControllerBase
     {
         private readonly PricesComparationContext _context;
-
         public BrandsController(PricesComparationContext context)
         {
             _context = context;
@@ -25,7 +24,7 @@ namespace PricesComparation.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Brand>>> GetBrand()
         {
-            return await _context.Brand.ToListAsync();
+            return await _context.Brand.Include(b => b.Products).ToListAsync();
         }
 
         // GET: api/Brands/5

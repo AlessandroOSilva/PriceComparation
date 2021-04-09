@@ -1,6 +1,7 @@
 ﻿    using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace PricesComparation.Models
 {
@@ -25,9 +26,16 @@ namespace PricesComparation.Models
             Address = address;
         }
 
-        public void AddProduct(Product p)
+        public void AddProduct(Product p, double price)
         {
+            p.Shop = this;
+            p.Price = price;
             Products.Add(p);
+        }
+
+        public List<Product> ListProduct()
+        {
+            return Products.ToList();
         }
 
         public void RemoveProduct(Product p)

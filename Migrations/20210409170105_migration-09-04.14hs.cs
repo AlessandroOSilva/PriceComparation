@@ -2,7 +2,7 @@
 
 namespace PricesComparation.Migrations
 {
-    public partial class ThirdMigration : Migration
+    public partial class migration090414hs : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

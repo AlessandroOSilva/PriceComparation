@@ -17,10 +17,14 @@ namespace PricesComparation.Models.Context
             modelBuilder.Entity<Shop>()
             .HasOne(a => a.Address)
             .WithOne();
-
-            modelBuilder.Entity<Product>()
-                .HasOne(b => b.Brand)
-                .WithMany(b => b.Products);
+            //commente
+            modelBuilder.Entity<Shop>()
+                .HasMany(p => p.Products)
+                .WithOne(s => s.Shop);
+            //comente
+            modelBuilder.Entity<Brand>()
+                .HasMany(p => p.Products)
+                .WithOne(b => b.Brand);
 
         }
     }

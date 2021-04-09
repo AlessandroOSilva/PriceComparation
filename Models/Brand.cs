@@ -11,7 +11,7 @@ namespace PricesComparation.Models
         [Key]
         public int BrandId { get; set; }
         public string Name { get; set; }
-        public ICollection<Product> Products { get; set; }
+        public ICollection<Product> Products { get; set; } = new List<Product>();
 
         public Brand()
         {
@@ -25,12 +25,17 @@ namespace PricesComparation.Models
 
         public void InsertProduct(Product p)
         {
+            p.Brand = this;
             Products.Add(p);
         }
 
         public void RemoveProduct(Product p)
         {
             Products.Remove(p);
+        }
+        public List<Product> FindAll()
+        {
+            return Products.ToList();
         }
     }
 }
