@@ -15,7 +15,6 @@ namespace PricesComparation.Models
         public string Typed { get; set; }
         [ForeignKey("BrandId")]
         public Brand Brand { get; set; }
-        public double Price { get; set; }
         [ForeignKey("ShopId")]
         public Shop Shop { get; set; }
 

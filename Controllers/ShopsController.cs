@@ -23,7 +23,7 @@ namespace PricesComparation.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Shop>>> GetShop()
         {
-                return await _context.Shop.Include(p => p.Address).Include(o => o.Products).ThenInclude(b => b.Brand.Products).ToListAsync();
+                return await _context.Shop.Include(p => p.Address).Include(o => o.Products).ToListAsync();
         }
 
         // GET: api/Shops/5

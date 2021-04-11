@@ -13,7 +13,7 @@ namespace PricesComparation.Models
         
         [ForeignKey("AdressId")]
         public Address Address { get; set; }
-        public ICollection<Product> Products { get; set; } = new List<Product>();
+        public ICollection<ProductShop> Products { get; set; } = new List<ProductShop>();
 
         public Shop()
         {
@@ -26,19 +26,17 @@ namespace PricesComparation.Models
             Address = address;
         }
 
-        public void AddProduct(Product p, double price)
+        public void AddProduct(ProductShop productShop)
         {
-            p.Shop = this;
-            p.Price = price;
-            Products.Add(p);
+            Products.Add(productShop);
         }
 
-        public List<Product> ListProduct()
+        public List<ProductShop> ListProduct()
         {
             return Products.ToList();
         }
 
-        public void RemoveProduct(Product p)
+        public void RemoveProduct(ProductShop p)
         {
             Products.Remove(p);
         }

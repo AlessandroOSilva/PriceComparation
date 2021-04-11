@@ -10,6 +10,8 @@ namespace PricesComparation.Models.Context
         public DbSet<Product> Product { get; set; }
         public DbSet<Brand> Brand { get; set; }
         public DbSet<Shop> Shop { get; set; }
+        public DbSet<ProductShop> ProductShops { get; set; }
+        public DbSet<PriceRecord> PriceRecords { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

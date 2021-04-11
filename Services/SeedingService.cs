@@ -9,7 +9,7 @@ namespace PricesComparation.Services
 {
     public class SeedingService
     {
-        private PricesComparationContext _context;
+        private readonly PricesComparationContext _context;
 
         public SeedingService(PricesComparationContext context)
         {
@@ -20,25 +20,44 @@ namespace PricesComparation.Services
         {
             if(_context.Shop.Any()||
                 _context.Brand.Any()||
-                _context.Product.Any())
+                _context.Product.Any()||
+                _context.ProductShops.Any()||
+                _context.PriceRecords.Any())
             {
                 return;
             }
 
-            Address a1 = new Address(1, "Goiás", "Aparecida de Goiânia", "Nova Olinda", "Av. Santana");
-            Address a2 = new Address(2, "Goiás", "Aparecida de Goiânia", "Parque Itamarati", "Av. Maria Lopes");
+            Address a1 = new(1, "Goiás", "Aparecida de Goiânia", "Nova Olinda", "Av. Santana");
+            Address a2 = new(2, "Goiás", "Aparecida de Goiânia", "Parque Itamarati", "Av. Maria Lopes");
             
 
-            Shop s1 = new Shop(3, "Cristo Rei 2", a1);
-            Shop s2 = new Shop(4, "Armazem Castro", a2);
+            Shop s1 = new(3, "Cristo Rei 2", a1);
+            Shop s2 = new(4, "Armazem Castro", a2);
             
 
-            Brand b1 = new Brand(5, "Sadia");
-            Brand b2 = new Brand(6, "Perdigão");
+            Brand b1 = new(5, "Sadia");
+            Brand b2 = new(6, "Perdigão");
             
 
-            Product p1 = new Product(7, "Coxa e sobre-coxa", "Carne", b1);
-            Product p2 = new Product(8, "Coxa e sobre-coxa", "Carne", b1);
+            Product p1 = new(7, "Coxa e sobre-coxa", "Carne", b1);
+            Product p2 = new(8, "Coxa e sobre-coxa", "Carne", b1);
+
+            ProductShop ps1 = new(1, p1, s1, 11.00, DateTime.Today);
+            ProductShop ps2 = new(2, p2, s1, 11.00, DateTime.Today);
+
+            ProductShop ps3 = new(3,p1, s2, 12.00, DateTime.Today);
+            ProductShop ps4 = new(4,p2, s2, 12.00, DateTime.Today);
+
+            PriceRecord pr1 = new(1, ps4);
+            PriceRecord pr2 = new(2, ps1);
+            PriceRecord pr3 = new(3, ps2);
+            PriceRecord pr4 = new(4, ps3);
+
+
+            ps1.AddRecord(pr1);
+            ps1.AddRecord(pr2);
+            ps1.AddRecord(pr3);
+            ps1.AddRecord(pr4);
 
             b1.InsertProduct(p1);
             b2.InsertProduct(p2);
@@ -46,12 +65,14 @@ namespace PricesComparation.Services
             b1.InsertProduct(p1);
             b2.InsertProduct(p2);
 
-            s1.AddProduct(p1, 11.00);
-            s1.AddProduct(p2, 11.00);
+            s1.AddProduct(ps1);
+            s1.AddProduct(ps2);
 
-            s2.AddProduct(p1, 12.00);
-            s2.AddProduct(p2, 12.00);
+            s2.AddProduct(ps3);
+            s2.AddProduct(ps4);
 
+            _context.ProductShops.AddRange(ps1,ps2, ps3, ps4);
+            _context.PriceRecords.AddRange(pr1, pr2, pr3, pr4);
             _context.Shop.AddRange(s1, s2);
             _context.Brand.AddRange(b1, b2);
             _context.Product.AddRange(p1, p2);
