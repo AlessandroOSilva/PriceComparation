@@ -27,7 +27,7 @@ namespace PricesComparation.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProduct()
         {
-            return await _context.Product.Include(p => p.Brand).Include(b => b.Shop).Include(b => b.Shop.Address).Include(p => p.Brand.Products).ToListAsync();
+            return await _context.Product.Include(p => p.Brand).Include(p => p.Shop).ToListAsync();
         }
 
         // GET: api/Products/5
@@ -49,7 +49,7 @@ namespace PricesComparation.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct(int id, Product product)
         {
-            if (id != product.ProductId)
+            if (id != product.Id)
             {
                 return BadRequest();
             }
@@ -83,7 +83,7 @@ namespace PricesComparation.Controllers
             _context.Product.Add(product);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
+            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
         }
 
         // DELETE: api/Products/5
@@ -104,7 +104,7 @@ namespace PricesComparation.Controllers
 
         private bool ProductExists(int id)
         {
-            return _context.Product.Any(e => e.ProductId == id);
+            return _context.Product.Any(e => e.Id == id);
         }
     }
 }

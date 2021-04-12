@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PricesComparation.Repositories.Base;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace PricesComparation.Models
 {
-    public class Brand
+    public class Brand : BaseEntity
     {
-        [Key]
-        public int BrandId { get; set; }
         public string Name { get; set; }
         public ICollection<Product> Products { get; set; } = new List<Product>();
 
@@ -19,7 +18,7 @@ namespace PricesComparation.Models
 
         public Brand(int id, string name)
         {
-            BrandId = id;
+            Id = id;
             Name = name;
         }
 

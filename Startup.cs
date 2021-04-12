@@ -8,8 +8,7 @@ using Microsoft.OpenApi.Models;
 using PricesComparation.Business;
 using PricesComparation.Business.Implementation;
 using PricesComparation.Models.Context;
-using PricesComparation.Repositories;
-using PricesComparation.Repositories.Implementation;
+using PricesComparation.Repositories.Generics;
 using PricesComparation.Services;
 
 namespace PricesComparation
@@ -40,9 +39,11 @@ namespace PricesComparation
 
 
             services.AddScoped<SeedingService>();
-
+            services.AddScoped<IShopBusiness, ShopBusinessImplementation>();
             services.AddScoped<IProductBusiness, ProductBusinesImplementation>();
-            services.AddScoped<IProductRepository, ProductRepositoryImplementation>();
+            services.AddScoped<IBrandBusiness, BrandBusinessImplementation>();
+
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

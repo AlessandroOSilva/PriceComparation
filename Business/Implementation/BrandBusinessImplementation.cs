@@ -1,14 +1,15 @@
 ﻿using PricesComparation.Models;
 using PricesComparation.Repositories;
+using PricesComparation.Repositories.Generics;
 using System.Collections.Generic;
 
 namespace PricesComparation.Business.Implementation
 {
     public class BrandBusinessImplementation : IBrandBusiness
     {
-        private readonly IBrandRepository _repository;
+        private readonly IGenericRepository<Brand> _repository;
 
-        public BrandBusinessImplementation(IBrandRepository repository)
+        public BrandBusinessImplementation(IGenericRepository<Brand> repository)
         {
             _repository = repository;
         }
@@ -23,9 +24,9 @@ namespace PricesComparation.Business.Implementation
             _repository.Delete(id);
         }
 
-        public Brand FinById(int id)
+        public Brand FindById(long id)
         {
-            return _repository.FinById(id);
+            return _repository.FindById(id);
         }
 
         public List<Brand> FindAll()

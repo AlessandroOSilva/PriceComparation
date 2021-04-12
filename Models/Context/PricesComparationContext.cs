@@ -15,6 +15,9 @@ namespace PricesComparation.Models.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Product>()
+                .HasOne(b => b.Brand)
+                .WithOne();
 
             modelBuilder.Entity<Shop>()
             .HasOne(a => a.Address)

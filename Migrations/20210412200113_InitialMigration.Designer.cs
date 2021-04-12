@@ -9,8 +9,8 @@ using PricesComparation.Models.Context;
 namespace PricesComparation.Migrations
 {
     [DbContext(typeof(PricesComparationContext))]
-    [Migration("20210408185759_CorrectionMigration")]
-    partial class CorrectionMigration
+    [Migration("20210412200113_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,40 +44,53 @@ namespace PricesComparation.Migrations
 
             modelBuilder.Entity("PricesComparation.Models.Brand", b =>
                 {
-                    b.Property<int>("BrandId")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.HasKey("BrandId");
+                    b.HasKey("Id");
 
                     b.ToTable("Brand");
                 });
 
-            modelBuilder.Entity("PricesComparation.Models.Product", b =>
+            modelBuilder.Entity("PricesComparation.Models.PriceRecord", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("RecordId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("BrandId")
+                    b.Property<int?>("ProductShopId")
                         .HasColumnType("int");
+
+                    b.HasKey("RecordId");
+
+                    b.HasIndex("ProductShopId");
+
+                    b.ToTable("PriceRecords");
+                });
+
+            modelBuilder.Entity("PricesComparation.Models.Product", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("BrandId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("double");
-
-                    b.Property<int?>("ShopId")
-                        .HasColumnType("int");
+                    b.Property<long?>("ShopId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Typed")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.HasKey("ProductId");
+                    b.HasKey("Id");
 
                     b.HasIndex("BrandId");
 
@@ -86,24 +99,60 @@ namespace PricesComparation.Migrations
                     b.ToTable("Product");
                 });
 
-            modelBuilder.Entity("PricesComparation.Models.Shop", b =>
+            modelBuilder.Entity("PricesComparation.Models.ProductShop", b =>
                 {
-                    b.Property<int>("ShopId")
+                    b.Property<int>("ProductShopId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("AdressId")
+                    b.Property<double>("Price")
+                        .HasColumnType("double");
+
+                    b.Property<DateTime>("PriceDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ShopId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("ProductShopId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ShopId");
+
+                    b.ToTable("ProductShops");
+                });
+
+            modelBuilder.Entity("PricesComparation.Models.Shop", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("AddressId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.HasKey("ShopId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("AdressId")
+                    b.HasIndex("AddressId")
                         .IsUnique();
 
                     b.ToTable("Shop");
+                });
+
+            modelBuilder.Entity("PricesComparation.Models.PriceRecord", b =>
+                {
+                    b.HasOne("PricesComparation.Models.ProductShop", "ProductShop")
+                        .WithMany("Records")
+                        .HasForeignKey("ProductShopId");
+
+                    b.Navigation("ProductShop");
                 });
 
             modelBuilder.Entity("PricesComparation.Models.Product", b =>
@@ -113,10 +162,25 @@ namespace PricesComparation.Migrations
                         .HasForeignKey("BrandId");
 
                     b.HasOne("PricesComparation.Models.Shop", "Shop")
-                        .WithMany("Products")
+                        .WithMany()
                         .HasForeignKey("ShopId");
 
                     b.Navigation("Brand");
+
+                    b.Navigation("Shop");
+                });
+
+            modelBuilder.Entity("PricesComparation.Models.ProductShop", b =>
+                {
+                    b.HasOne("PricesComparation.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
+                    b.HasOne("PricesComparation.Models.Shop", "Shop")
+                        .WithMany("Products")
+                        .HasForeignKey("ShopId");
+
+                    b.Navigation("Product");
 
                     b.Navigation("Shop");
                 });
@@ -125,7 +189,7 @@ namespace PricesComparation.Migrations
                 {
                     b.HasOne("PricesComparation.Models.Address", "Address")
                         .WithOne()
-                        .HasForeignKey("PricesComparation.Models.Shop", "AdressId");
+                        .HasForeignKey("PricesComparation.Models.Shop", "AddressId");
 
                     b.Navigation("Address");
                 });
@@ -133,6 +197,11 @@ namespace PricesComparation.Migrations
             modelBuilder.Entity("PricesComparation.Models.Brand", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("PricesComparation.Models.ProductShop", b =>
+                {
+                    b.Navigation("Records");
                 });
 
             modelBuilder.Entity("PricesComparation.Models.Shop", b =>

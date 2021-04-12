@@ -9,7 +9,7 @@ namespace PricesComparation.Business
     public interface IBrandBusiness
     {
         Brand Create(Brand brand);
-        Brand FinById(int id);
+        Brand FindById(long id);
         Brand Update(Brand brand);
         List<Brand> FindAll();
         void Delete(long id);

@@ -1,5 +1,6 @@
 ﻿using PricesComparation.Models;
 using PricesComparation.Repositories;
+using PricesComparation.Repositories.Generics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,9 @@ namespace PricesComparation.Business.Implementation
 {
     public class ShopBusinessImplementation : IShopBusiness
     {
-        private readonly IShopRepository _repository;
+        private readonly IGenericRepository<Shop> _repository;
 
-        public ShopBusinessImplementation(IShopRepository repository)
+        public ShopBusinessImplementation(IGenericRepository<Shop> repository)
         {
             _repository = repository;
         }

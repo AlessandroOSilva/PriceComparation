@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PricesComparation.Business;
 using PricesComparation.Models;
 using PricesComparation.Models.Context;
 
@@ -45,7 +46,7 @@ namespace PricesComparation.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutShop(int id, Shop shop)
         {
-            if (id != shop.ShopId)
+            if (id != shop.Id)
             {
                 return BadRequest();
             }
@@ -58,7 +59,7 @@ namespace PricesComparation.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ShopExists(id))
+                if (!Exists(id))
                 {
                     return NotFound();
                 }
@@ -83,7 +84,7 @@ namespace PricesComparation.Controllers
             }
             catch (DbUpdateException)
             {
-                if (ShopExists(shop.ShopId))
+                if (Exists(shop.Id))
                 {
                     return Conflict();
                 }
@@ -93,7 +94,7 @@ namespace PricesComparation.Controllers
                 }
             }
 
-            return CreatedAtAction("GetShop", new { id = shop.ShopId }, shop);
+            return CreatedAtAction("GetShop", new { id = shop.Id }, shop);
         }
 
         // DELETE: api/Shops/5
@@ -112,9 +113,9 @@ namespace PricesComparation.Controllers
             return NoContent();
         }
 
-        private bool ShopExists(int id)
+        private bool Exists(long id)
         {
-            return _context.Shop.Any(e => e.ShopId == id);
+            return _context.Shop.Any(e => e.Id == id);
         }
     }
 }

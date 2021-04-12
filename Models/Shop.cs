@@ -1,17 +1,15 @@
-﻿    using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using PricesComparation.Repositories.Base;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace PricesComparation.Models
 {
-    public class Shop
+    public class Shop : BaseEntity
     {
-        [Key]
-        public int ShopId { get; set; }
         public string Name { get; set; }
         
-        [ForeignKey("AdressId")]
+        [ForeignKey("AddressId")]
         public Address Address { get; set; }
         public ICollection<ProductShop> Products { get; set; } = new List<ProductShop>();
 
@@ -21,7 +19,7 @@ namespace PricesComparation.Models
 
         public Shop(int id, string name, Address address)
         {
-            ShopId = id;
+            Id = id;
             Name = name;
             Address = address;
         }

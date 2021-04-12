@@ -42,14 +42,14 @@ namespace PricesComparation.Migrations
 
             modelBuilder.Entity("PricesComparation.Models.Brand", b =>
                 {
-                    b.Property<int>("BrandId")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.HasKey("BrandId");
+                    b.HasKey("Id");
 
                     b.ToTable("Brand");
                 });
@@ -72,23 +72,23 @@ namespace PricesComparation.Migrations
 
             modelBuilder.Entity("PricesComparation.Models.Product", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    b.Property<int?>("BrandId")
-                        .HasColumnType("int");
+                    b.Property<long?>("BrandId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int?>("ShopId")
-                        .HasColumnType("int");
+                    b.Property<long?>("ShopId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Typed")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.HasKey("ProductId");
+                    b.HasKey("Id");
 
                     b.HasIndex("BrandId");
 
@@ -109,11 +109,11 @@ namespace PricesComparation.Migrations
                     b.Property<DateTime>("PriceDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int");
+                    b.Property<long?>("ProductId")
+                        .HasColumnType("bigint");
 
-                    b.Property<int?>("ShopId")
-                        .HasColumnType("int");
+                    b.Property<long?>("ShopId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("ProductShopId");
 
@@ -126,19 +126,19 @@ namespace PricesComparation.Migrations
 
             modelBuilder.Entity("PricesComparation.Models.Shop", b =>
                 {
-                    b.Property<int>("ShopId")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    b.Property<int?>("AdressId")
+                    b.Property<int?>("AddressId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.HasKey("ShopId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("AdressId")
+                    b.HasIndex("AddressId")
                         .IsUnique();
 
                     b.ToTable("Shop");
@@ -187,7 +187,7 @@ namespace PricesComparation.Migrations
                 {
                     b.HasOne("PricesComparation.Models.Address", "Address")
                         .WithOne()
-                        .HasForeignKey("PricesComparation.Models.Shop", "AdressId");
+                        .HasForeignKey("PricesComparation.Models.Shop", "AddressId");
 
                     b.Navigation("Address");
                 });
