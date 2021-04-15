@@ -1,9 +1,6 @@
 ﻿using PricesComparation.Repositories.Base;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace PricesComparation.Models
 {
@@ -32,7 +29,7 @@ namespace PricesComparation.Models
         {
             Products.Remove(p);
         }
-        public List<Product> FindAll()
+        public List<Product> FindProducts()
         {
             return Products.ToList();
         }

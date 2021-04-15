@@ -32,15 +32,20 @@ namespace PricesComparation.Models
             PriceDate = priceDate;
         }
 
-        public void AddRecord(PriceRecord priceRecord)
+        public void AddRecord(PriceRecord pr)
         {
-            Records.Add(priceRecord);
+            Records.Add(pr);
         }
 
         public void ChangePrice(double valor, DateTime date)
         {
             PriceDate = date;
             Price = valor;
+        }
+
+        public List<PriceRecord> AllRecordProduct(long id)
+        { 
+             return Records.TakeWhile(p => p.ProductShop.ProductShopId.Equals(id)).ToList();
         }
     }
 }

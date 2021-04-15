@@ -5,8 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using PricesComparation.Business;
-using PricesComparation.Business.Implementation;
+using PricesComparation.Models;
 using PricesComparation.Models.Context;
 using PricesComparation.Repositories.Generics;
 using PricesComparation.Services;
@@ -29,8 +28,9 @@ namespace PricesComparation
             services.AddDbContextPool<PricesComparationContext>(options => options.UseMySql(connection, ServerVersion.AutoDetect(connection)));
 
             services.AddControllers().AddNewtonsoftJson(opt => 
-            opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-
+            opt.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore).AddNewtonsoftJson(op 
+            => op.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore).AddNewtonsoftJson(o 
+            => o.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented);
 
             services.AddSwaggerGen(c =>
             {
@@ -39,10 +39,7 @@ namespace PricesComparation
 
 
             services.AddScoped<SeedingService>();
-            services.AddScoped<IShopBusiness, ShopBusinessImplementation>();
-            services.AddScoped<IProductBusiness, ProductBusinesImplementation>();
-            services.AddScoped<IBrandBusiness, BrandBusinessImplementation>();
-
+       
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         }
 

@@ -25,7 +25,7 @@ namespace PricesComparation.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductShop>>> GetProductShops()
         {
-            return await _context.ProductShops.Include(p => p.Product).ThenInclude(p => p.Shop).Include(p => p.Product.Brand).ToListAsync();
+            return await _context.ProductShops.Include(p => p.Product).Include(p => p.Product.Brand).Include(s => s.Shop.Address).ToListAsync();
         }
 
         // GET: api/ProductShops/5
@@ -43,7 +43,6 @@ namespace PricesComparation.Controllers
         }
 
         // PUT: api/ProductShops/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProductShop(int id, ProductShop productShop)
         {
@@ -51,7 +50,12 @@ namespace PricesComparation.Controllers
             {
                 return BadRequest();
             }
+            var pr = new PriceRecord();
+            
+            pr.Price = productShop.Price;
+            pr.PriceDate = productShop.PriceDate;
 
+            productShop.AddRecord(pr);
             _context.Entry(productShop).State = EntityState.Modified;
 
             try
@@ -73,8 +77,6 @@ namespace PricesComparation.Controllers
             return NoContent();
         }
 
-        // POST: api/ProductShops
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<ProductShop>> PostProductShop(ProductShop productShop)
         {

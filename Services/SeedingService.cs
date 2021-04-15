@@ -39,8 +39,8 @@ namespace PricesComparation.Services
             Brand b2 = new(6, "Perdigão");
             
 
-            Product p1 = new(7, "Coxa e sobre-coxa", "Carne", b1);
-            Product p2 = new(8, "Coxa e sobre-coxa", "Carne", b1);
+            Product p1 = new(7, "Coxa e sobre-coxa","img1", "Carne", b1);
+            Product p2 = new(8, "Coxa e sobre-coxa","img2", "Carne", b1);
 
             ProductShop ps1 = new(1, p1, s1, 11.00, DateTime.Today);
             ProductShop ps2 = new(2, p2, s1, 11.00, DateTime.Today);
@@ -48,11 +48,10 @@ namespace PricesComparation.Services
             ProductShop ps3 = new(3,p1, s2, 12.00, DateTime.Today);
             ProductShop ps4 = new(4,p2, s2, 12.00, DateTime.Today);
 
-            PriceRecord pr1 = new(1, ps4);
-            PriceRecord pr2 = new(2, ps1);
-            PriceRecord pr3 = new(3, ps2);
-            PriceRecord pr4 = new(4, ps3);
-
+            PriceRecord pr1 = new PriceRecord(1, ps1, ps1.Price, ps1.PriceDate);
+            PriceRecord pr2 = new PriceRecord(2, ps2, ps2.Price, ps2.PriceDate);
+            PriceRecord pr3 = new PriceRecord(3, ps3, ps3.Price, ps3.PriceDate);
+            PriceRecord pr4 = new PriceRecord(4, ps4, ps4.Price, ps4.PriceDate);
 
             ps1.AddRecord(pr1);
             ps1.AddRecord(pr2);

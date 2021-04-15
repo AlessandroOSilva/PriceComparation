@@ -8,11 +8,11 @@ namespace PricesComparation.Repositories.Generics
 {
     public interface IGenericRepository<T> where T : BaseEntity
     {
-        T Create(T t);
-        T FindById(long id);
-        T Update(T t);
-        List<T> FindAll();
-        void Delete(long id);
+        Task<T> Create(T t);
+        Task<T> FindById(long id);
+        Task<T> Update(T t);
+        Task<List<T>> FindAll();
+        Task Delete(long id);
         bool Exists(long id);
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PricesComparation.Models.Context;
 using PricesComparation.Repositories.Base;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,28 +10,28 @@ namespace PricesComparation.Repositories.Generics
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
         private readonly PricesComparationContext _context;
-        private DbSet<T> dataset;
+        private readonly DbSet<T> dataset;
         public GenericRepository(PricesComparationContext context)
         {
             _context = context;
             dataset = _context.Set<T>();
         }
 
-        public T Create(T t)
+        public async Task<T> Create(T t)
         {
             try
             {
-                dataset.Add(t);
-                _context.SaveChanges();
+                 dataset.Add(t);
+                await _context.SaveChangesAsync();
             }
             catch
             {
                 throw;
             }
-            return t;
+             return t;
         }
 
-        public void Delete(long id)
+        public async Task Delete(long id)
         {
             var result = dataset.SingleOrDefault(p => p.Id.Equals(id));
             if (result != null)
@@ -40,7 +39,7 @@ namespace PricesComparation.Repositories.Generics
                 try
                 {
                     dataset.Remove(result);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
                 }
                 catch
                 {
@@ -54,19 +53,19 @@ namespace PricesComparation.Repositories.Generics
             return dataset.Any(x => x.Id.Equals(id));
         }
 
-        public T FindById(long id)
+        public async Task<T> FindById(long id)
         {
-            return dataset.FirstOrDefault(x => x.Id.Equals(id));
+            return await dataset.FirstOrDefaultAsync(x => x.Id.Equals(id));
         }
 
-        public List<T> FindAll()
+        public async Task<List<T>> FindAll()
         {
-            return dataset.ToList();
+            return await dataset.ToListAsync();
         }
 
-        public T Update(T t)
+        public async Task<T> Update(T t)
         {
-            var result = dataset.SingleOrDefault(p => p.Id.Equals(t.Id));
+            var result = await dataset.SingleOrDefaultAsync(p => p.Id.Equals(t.Id));
             if (result != null)
             {
                 try
